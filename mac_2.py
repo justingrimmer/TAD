@@ -36,7 +36,8 @@ x = 5
 y = 3
 x / y
 
-###In most programming languages, including python versions before 3.0, dividing two ints will yield an int, but since ints can only be whole numbers, any remainder is truncated. The effect is that integer division will give the answer rounded down to the nearest whole number. You can avoid this by casting at least one of the inputs to a float.
+###In most programming languages, including python versions before 3.0, dividing 
+#two ints will yield an int, but since ints can only be whole numbers, any remainder is truncated. The effect is that integer division will give the answer rounded down to the nearest whole number. You can avoid this by casting at least one of the inputs to a float.
 
 
 float(x) / y
@@ -60,6 +61,7 @@ print 5**2           #expontiation
 
 
 mybool = True
+
 if (mybool == True):
     print "yes :D"
 else: 
@@ -115,10 +117,11 @@ len(fruit)
 
 ##concatenating string
 
-fruit + " and bananas"
+fruit + (" and bananas")
 
 
 x = 5
+
 y = '5'
 
 print x+x
@@ -127,7 +130,7 @@ print y+y
 
 ##string modifications
 
-mystring = "I'd like to split this sentence into a list of words."
+mystring = "I'd like to split this sentence  into a list of words."
 mystring.split(" ")
 
 mystring.strip(".")
@@ -195,6 +198,12 @@ for element in nestedList:
 veggies = ["carrot", "potato","spinach", "turnip"]
 VEGGIES = [x.upper() for x in veggies]
 print VEGGIES
+
+
+for_veg = []
+
+for x in veggies:
+    for_veg.append(x.upper())
 
 
 print veggies[1:3]
@@ -431,7 +440,7 @@ getty_count = getty.values()
 getty_keys = getty.keys()
 
 
-rfile = open('/users/justingrimmer/dropbox/teaching/text/tad14/class3/GettysburgFinal.txt', 'w')
+rfile = open('/users/justingrimmer/dropbox/teaching/text/mac18/class2/GettysburgFinal.txt', 'w')
 rfile.write('stem, count')
 rfile.write('\n')
 
