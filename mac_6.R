@@ -1,3 +1,16 @@
+##############################
+####
+####
+####  Lecture 6
+####
+####  Machine Learning
+####
+####
+####
+###############################
+
+
+
 ##we need to install two packages to work with today
 ##stm is the structural topic model packages from Roberts and Stewart
 install.packages('stm')
@@ -6,7 +19,7 @@ install.packages('stm')
 install.packages('SnowballC')
 
 
-
+##download the consumer narratives
 cfp<- read.delim('ConsumerNarratives.csv', sep=',')
 ##check the column names of the cfp data.  we're going to work with a subset of the data
 ##but there is a lot of information here!!!
