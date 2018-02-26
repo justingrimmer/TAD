@@ -1,0 +1,515 @@
+\documentclass{beamer}
+
+%\usepackage[table]{xcolor}
+\mode<presentation> {
+  \usetheme{Boadilla}
+%  \usetheme{Pittsburgh}
+%\usefonttheme[2]{sans}
+\renewcommand{\familydefault}{cmss}
+%\usepackage{lmodern}
+%\usepackage[T1]{fontenc}
+%\usepackage{palatino}
+%\usepackage{cmbright}
+  \setbeamercovered{transparent}
+\useinnertheme{rectangles}
+}
+%\usepackage{normalem}{ulem}
+%\usepackage{colortbl, textcomp}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{structure}{fg= black}
+\definecolor{trial}{cmyk}{1,0,0, 0}
+\definecolor{trial2}{cmyk}{0.00,0,1, 0}
+\definecolor{darkgreen}{rgb}{0,.4, 0.1}
+\usepackage{array}
+\beamertemplatesolidbackgroundcolor{white}  \setbeamercolor{alerted
+text}{fg=red}
+
+\setbeamertemplate{caption}[numbered]\newcounter{mylastframe}
+
+%\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{colortbl}
+%\usepackage[usenames, dvipsnames]{color}
+%\setbeamertemplate{caption}[numbered]\newcounter{mylastframe}c
+%\newcolumntype{Y}{\columncolor[cmyk]{0, 0, 1, 0}\raggedright}
+%\newcolumntype{C}{\columncolor[cmyk]{1, 0, 0, 0}\raggedright}
+%\newcolumntype{G}{\columncolor[rgb]{0, 1, 0}\raggedright}
+%\newcolumntype{R}{\columncolor[rgb]{1, 0, 0}\raggedright}
+
+%\begin{beamerboxesrounded}[upper=uppercol,lower=lowercol,shadow=true]{Block}
+%$A = B$.
+%\end{beamerboxesrounded}}
+\renewcommand{\familydefault}{cmss}
+%\usepackage[all]{xy}
+
+\usepackage{tikz}
+\usepackage{lipsum}
+
+ \newenvironment{changemargin}[3]{%
+ \begin{list}{}{%
+ \setlength{\topsep}{0pt}%
+ \setlength{\leftmargin}{#1}%
+ \setlength{\rightmargin}{#2}%
+ \setlength{\topmargin}{#3}%
+ \setlength{\listparindent}{\parindent}%
+ \setlength{\itemindent}{\parindent}%
+ \setlength{\parsep}{\parskip}%
+ }%
+\item[]}{\end{list}}
+\usetikzlibrary{arrows}
+%\usepackage{palatino}
+%\usepackage{eulervm}
+\usecolortheme{lily}
+%\usepackage[latin1]{inputenc}
+\title[Machine Learning] % (optional, nur bei langen Titeln nötig)
+{Machine Learning}
+
+\author{Justin Grimmer}
+\institute[University of Chicago]{Associate Professor\\Department of Political Science \\  University of Chicago}
+\vspace{0.3in}
+
+
+\date{February 26th, 2018}%[Big Data Workshop] 
+%\date{\today}
+
+
+
+
+
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{A Causal Inference Refresher}
+
+\pause 
+
+\begin{itemize}
+\invisible<1>{\item[-] Suppose we have $N$ units, $i = 1, \hdots, N$.\\} \pause 
+\invisible<1-2>{\item[-] Each unit receives treatment $\boldsymbol{T}_{i}$ (potentially vector valued)} \pause 
+\invisible<1-3>{\item[-] Suppose we have (potentially vector valued) response $\boldsymbol{Y}_{i}(\boldsymbol{T}_{i})$} \pause 
+\begin{itemize}
+\invisible<1-4>{\item[-] Unit $i$'s response to treatment $\boldsymbol{T}_{i}$ } \pause 
+\invisible<1-5>{\item[-] Function: maps from treatments to responses} \pause 
+\end{itemize}
+\invisible<1-6>{\item[-] Fundamental problem of causal inference observe only one $\boldsymbol{Y}_{i}(\boldsymbol{T}_{i})$ } \pause 
+\invisible<1-7>{\item[-] Quantity of interest:} \pause 
+\begin{itemize}
+\invisible<1-8>{\item[-] Simplest (yet very powerful) case$\leadsto$ $T_{i} \in \{0, 1\}$, $Y_{i}(T_{i}) \in \{0, 1\}$} \pause 
+\begin{eqnarray}
+\invisible<1-9>{\text{ATE} & = & E[Y(1) - Y(0)]  \nonumber } \pause 
+\end{eqnarray}
+\invisible<1-10>{\item[-] Estimate with: } \pause 
+\begin{eqnarray}
+\only<1-12>{\invisible<1-11>{\widehat{\text{ATE}} & = & E[Y(1)| T= 1] - E[Y(0)| T = 0 ] \nonumber } }
+\only<13->{\widehat{\text{ATE}} & = & \frac{\sum_{i=1}^{N} I(T_{i} = 1) Y_{i}}{ \sum_{i=1}^{N} I(T_{i} = 1) } - \frac{\sum_{i=1}^{N} I(T_{i} = 0) Y_{i}}{ \sum_{i=1}^{N} I(T_{i} = 0) }} \nonumber 
+\end{eqnarray}
+\pause 
+\end{itemize}
+\end{itemize}
+
+\pause 
+\invisible<1-13>{Question: how do we \alert{accurately} estimate quantities like ATE?} 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Our Plan for the Day}
+
+\begin{itemize}
+	\item[-] Experimental design
+	\item[-] Conditional average treatment effects
+	\item[-] Methods for estimating heterogeneous treatment effects
+\end{itemize}	
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{\alert{An Example} Experiment } 
+
+
+\only<1-2>{\invisible<1>{Rep. Harold ``Hal" Rogers (KY-05) announced today that Kentucky is slated to
+receive \$962,500 to protect critical infrastructure- power plants, chemical
+facilities, stadiums, and other high-risk assets, through the U.S. Department of
+Homeland Security's buffer zone protection program} }
+
+\only<3>{A federal grant will help keep the Brainerd Lakes Airport operating in winter
+weather. Today, Congressman Jim Oberstar announced that the Federal Aviation
+Administration (FAA) will award \$528,873 to the Brainerd airport. The funding
+will be used to purchase new snow removal and deicing equipment.}
+
+
+\only<4>{Congresswoman Darlene Hooley (OR-5) and Congressmen Earl Blumenauer (OR-3),
+David Wu (OR-1) and Greg Walden (OR-2) joined together today in announcing
+\$375,000 in federal funding for the Oregon Partnership to combat methamphetamine
+abuse in Oregon.\\}
+
+
+\only<5>{What information in credit claiming messages affect evaluations?}
+
+\pause \pause \pause \pause
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Rewarding Actions and Type of Expenditure, Not Money}
+
+Experiment: vary the \alert{recipient} of money and the \alert{action} reported in credit claiming statement (and many other features)
+
+\invisible<1>{Treatments: \alert<2>{type}}\invisible<1-2>{, \alert<3>{stage}}\invisible<1-3>{, \alert<4>{money}}\invisible<1-4>{, \alert<5>{collaboration}}\invisible<1-5>{, \alert<6>{partisanship}} 
+
+%\invisible<1>{Treatments: \alert<2>{type}}\invisible<1-2>{, \alert<3>{stage}} \invisible<1-3>{money, collaboration, and partisanship} 
+
+\only<1>{\vspace{1.65in}}
+\only<7>{\alert{Control Condition}:}
+
+
+\only<2>{\begin{itemize}
+\item[1)] Planned Parenthood
+\item[2)] Parks
+\item[3)] Gun Range
+\item[4)] Fire Department
+\item[5)] Police 
+\item[6)] Roads
+\end{itemize}
+\vspace{0.125in}}
+
+\only<4>{\begin{itemize}
+\item[1)] \$50 Thousand
+\item[2)] \$20 Million 
+\end{itemize}
+\vspace{1.05in}}
+
+\only<3>{\begin{itemize}
+\item[1)] Will request
+\item[2)] Requested
+\item[3)] Secured
+\end{itemize}
+\vspace{0.825in}
+
+}
+
+%\only<4>{ \invisible<1-8>{\begin{itemize}
+%\item[1)] Will request
+%\item[2)] Request
+%\item[3)] Secured
+%\end{itemize}
+%\vspace{0.825in}
+%}}
+
+
+\only<5>{\begin{itemize}
+\item[1)] Alone 
+\item[2)] w/ Senate Democrat
+\item[3)] w/ Senate Republican 
+\end{itemize}
+\vspace{.825in}
+}
+
+\only<6>{\begin{itemize}
+\item[1)] Democrat
+\item[2)] Republican
+\end{itemize}
+\vspace{1.05in}
+}
+
+\only<7>{\begin{itemize}
+\item[] Advertising press release
+\end{itemize}
+\vspace{1.125in}
+}
+
+
+\pause \pause \pause \pause \pause 
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Rewarding Actions and Type of Expenditure, Not Money}
+
+\only<1>{Example  Treatment: \\
+\textbf{Headline}: Representative [blackbox] \alert{secured} \alert{\$50 Thousand} \alert{to purchase safety equipment for local firefighters}  \\
+\textbf{Body}: Representative [blackbox] (\alert{Democrat}) and \alert{Senator [blackbox], a Democrat}, \alert{secured} \alert{\$50 Thousand} \alert{to purchase safety equipment for local firefighters}.  \\
+Rep. [blackbox] said ``This money \alert{will help} \alert{our brave firefighters stay safe as they protect our businesses and homes}" \\}
+
+
+\only<2>{Example Treatment:\\
+\textbf{Headline}: Representative [blackbox] \alert{will request} \alert{\$20 million} \alert{for medical equipment at the local Planned Parenthood.}  \\
+\textbf{Body}: Representative [blackbox] (\alert{Democrat}), \alert{will request} \alert{\$20 million} \alert{for medical equipment at the local Planned Parenthood}.  \\
+Rep. [blackbox] said ``This money \alert{would help} \alert{provide state of the art care for women in our community.}" \\}
+
+\only<3->{
+\invisible<1-2>{\alert{214} other conditions} \\
+\invisible<1-3>{Dependent variable: Approve of representative}\\
+
+\vspace{0.175in}
+\large 
+\invisible<1-4>{\alert{Goal} $\leadsto$ measure effect of credit claiming content on approval ratings }
+\invisible<1-5>{Mechanics$\leadsto$  Mechanical Turk sample (\alert{Findings are replicated in representative samples, using real representatives/senators}  )}
+}
+
+
+\pause \pause \pause \pause \pause %\pause \pause 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rewarding Actions and Type of Expenditure, Not Money}
+
+\begin{itemize} 
+\item[-] Participant  $i$ ($i=1, \hdots, N$), has treatment assignment $\textbf{T}_{i}$   \\
+\invisible<1>{\item[-] If $\text{T}_{i} = 0$ for control condition} \\
+\invisible<1-2>{\item[-] $\textbf{T}_{i} = (\text{T}_{i, \text{type}},  \text{T}_{i, \text{stage} },\text{T}_{i, \text{money}},  \text{T}_{i, \text{collab.}}, \text{T}_{i, \text{part.}} )$ }
+
+\invisible<1-3>{\item[-] $Y_{i}(\textbf{T}_{i} )$ : participant $i$'s Approval decision under treatment $\textbf{T}_{i} $}  
+\invisible<1-4>{\item[-] \alert{Quantities of Interest} } 
+\only<1-10>{\invisible<1-5>{\item[-] Effect of particular component of message: }
+\begin{itemize}
+\invisible<1-6>{\item[-] T$_{\text{stage}} = $ Secured}
+\invisible<1-7>{\item[-] T$_{\text{stage}}  = $ Requested }
+\invisible<1-8>{\item[-] T$_{\text{stage}} = $ Will Request } 
+\invisible<1-9>{\item[-] T$_{j} = k $} 
+\end{itemize}
+}
+
+
+\invisible<1-10>{\item[-]  Marginal Average Treatment Effect  (MATE$_{\text{T}_{j} = k } $) }  
+\end{itemize}
+\only<1-13>{
+\begin{eqnarray}
+\invisible<1-11>{\text{MATE}_{\text{T}_{j} = k} & = & \int \text{E}[Y(\text{T}_{j} = k , \textbf{T}_{-j} )  - Y(0) ] \text{d}\text{F}_{\textbf{T}_{-j} | \text{T}_{j} = k } \nonumber \\}
+\invisible<1-12>{\text{MATE}_{\text{T}_{j} = k}	& = & \text{E}[Y(\text{T}_{j} = k ) - Y(0) ] \nonumber }
+\end{eqnarray}
+\vspace{1.5in}
+
+}
+\only<14->{		
+\begin{eqnarray}
+		\text{MATE}_{\text{T}_{j} = k}	& = & \text{E}[Y(\text{T}_{j} = k )|\text{T}_{j} = k ]  - \text{E}[Y(0)|\text{T} = 0 ] \nonumber \\
+\invisible<1-14>{\widehat{\text{MATE}_{\text{T}_{j} = k} } & = & 		\frac{\sum_{i=1}^{N} Y_{i} I(\text{T}_{ij} = k)  }{\sum_{i=1}^{N} I(\text{T}_{ij} = k) } - \frac{\sum_{i=1}^{N} Y_{i} I(\text{T}_{i}=0)  }{\sum_{i=1}^{N} I(\text{T}_{i}= 0) } \nonumber								}
+\end{eqnarray}										
+\vspace{1.5in}
+}
+
+
+
+
+\pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause 
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Rewarding Actions and Type of Expenditure, Not Money}
+%(1) Marginal Average Treatment Effect (MATE$_{T_{j} = k } $): $\text{E}[Y(T_{j} = k ) - Y(0) ]$ \\
+%\vspace{0.025in} 
+%\pause 
+\begin{itemize}
+\item[-] Response may be conditional on respondent characteristics $\textbf{x}$ \pause \\
+\invisible<1>{\item[-] For example $\textbf{x}  = $ (Conservative, Republican)} \pause \\
+\invisible<1-2>{\item[-] Marginal Conditional Average Treatment Effect (MCATE$_{\text{T}_{j} = k,\textbf{x}}$)} \pause 
+\end{itemize}
+\begin{eqnarray}
+\invisible<1-3>{\text{MCATE}_{\text{T}_{j} = k,\textbf{x}} & = & \text{E}[Y(\text{T}_{j} = k) - Y(0) | \textbf{x}] }    \nonumber\\
+\invisible<1-4>{\text{MCATE}_{\text{T}_{j} = k, \textbf{x}} & = & \text{E}[Y(\text{T}_{j} = k)|\textbf{x} ] - \text{E}[Y(0) | \textbf{x} ] \nonumber }  \nonumber 
+\end{eqnarray}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Rewarding Actions and Type of Expenditure, Not Money}
+\begin{eqnarray}
+\text{MCATE}_{\text{T}_{j} = k, \textbf{x}} & = & \text{E}[Y(\text{T}_{j} = k)|\textbf{x} ] - \text{E}[Y(0) | \textbf{x} ] \nonumber \\
+\only<1-8>{\invisible<1>{\widehat{\text{MCATE}_{\text{T}_{j} = k,\textbf{x}}}& = &\frac{\sum_{i=1}^{N} Y_{i} I(\text{T}_{j} = k ,  \textbf{x}_{i} = \textbf{x} )  }{\sum_{i=1}^{N} I(\text{T}_{j} = k , \textbf{x}_{i} = \textbf{x} ) }    - \frac{\sum_{i=1}^{N} Y_{i} I(\text{T}_{i}=0 , \textbf{x}_{i} = \textbf{x})  }{\sum_{i=1}^{N} I(\text{T}_{i}= 0 , \textbf{x}_{i} = \textbf{x}) }  \nonumber } \pause }
+\only<9->{
+\widehat{\text{MCATE}_{\text{T}_{j} = k,\textbf{x}}} & = & \widehat{g}_{m} (\text{T}_{j} = k, \textbf{x} ) - \widehat{g}_{m}(0, \textbf{x} ) \nonumber 
+}
+\end{eqnarray}
+
+
+
+\begin{itemize}
+\invisible<1-2>{\item[-] \alert{Curse of Dimensionality}: highly variable estimates, (sometimes) empty strata} 
+\invisible<1-3>{\item[-] Separate systematic differences from noise $\leadsto$ \alert{data} and \alert{assumptions} } \invisible<1-4>{ Heterogeneous treatment effect methods} % ($g_{m} (\text{T}_{j} = k, \textbf{x} ) $)}
+\begin{itemize}
+\invisible<1-5>{\item[-] LASSO, Find It (Imai and Ratkovic, 2013)$\leadsto$ sparsity} 
+\invisible<1-6>{\item[-] Ridge, KRLS (Hainmueller and Hazlett, 2013)$\leadsto$ flexible surface, dense} 
+\invisible<1-7>{\item[-] Model $m$ to estimate some function $g_{m}(\text{T}_{j} = k, \boldsymbol{x})$}
+\end{itemize}
+\invisible<1-8>{\item[-] Perform well: $g_{m}(\text{T}_{j} = k, \boldsymbol{x})$ accurately estimates response surface ($\text{E}[Y(\text{T}_{j} = k)|\textbf{x} ]$)}
+\invisible<1-9>{\item[-] Perform well: accurate out of sample prediction and classification (van der Laan et al 2007, Raftery et al 2005) }
+\end{itemize}
+
+\invisible<1-10>{Create ensemble: weighting methods by (unique) out of sample predictive performance}
+
+\pause \pause \pause \pause \pause \pause \pause \pause \pause \pause 
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Weighted Ensemble to Measure Credit Claiming Rate}
+
+\begin{itemize}
+\item[-] Suppose we have $M$ $(m = 1, \hdots, M)$ models.  
+\end{itemize}
+
+
+\begin{eqnarray}
+\only<1-13>{\invisible<1>{\widehat{\text{MCATE}_{\text{T}_{j} = k,\textbf{x}}}  & = & \sum_{m=1}^{M} \alert<3>{\widehat{\pi}_{m}} (\alert<4>{\widehat{g}_{m} (\text{T}_{j} = k, \textbf{x} )  }-\alert<4>{\widehat{ g}_{m} (0, \textbf{x} )  })} \nonumber }
+\only<14->{\alert{\widehat{\text{MCATE}_{\text{T}_{j} = k,\textbf{x}_{\text{new}}}}  }& = & \sum_{m=1}^{M} \alert{\widehat{\pi}_{m}} (\alert{\widehat{g}_{m} (\text{T}_{j} = k, \textbf{x}_{\text{new}} ) } -\alert{\widehat{ g}_{m} (0, \textbf{x}_{\text{new}} )  } )\nonumber }
+\end{eqnarray}
+
+\begin{itemize}
+\invisible<1-4>{\item[-] Estimate weights $(\widehat{\pi}_{m})$} 
+\only<1-12>{
+\begin{itemize}
+\invisible<1-5>{\item[-] 10-fold cross validation: generate $M$ out of sample predictions for each observation}
+\invisible<1-6>{\item[] $\widehat{\textbf{Y}}_{i}  = (\widehat{Y}_{i1}, \widehat{Y}_{i2}, \hdots, \widehat{Y}_{iM} )$} 
+\only<1-11>{\invisible<1-7>{\item[-] Estimate weights with constrained regression:}
+\begin{eqnarray}
+\invisible<1-8>{Y_{i} & = & \sum_{m=1}^{M} \pi_{m} \hat{Y}_{im} + \epsilon_{i} \nonumber }
+\end{eqnarray}
+\invisible<1-9>{\item[] where we impose constraints: $\pi_{m} \geq 0 $ and $\sum_{m=1}^{M} \pi_{m} = 1$. } 
+\invisible<1-10>{\item[-] Result $\widehat{\pi}_{m}$ for each method } }
+\only<12>{\item[-] (Alternatively) Estimate weights from mixture model (EBMA) (Raftery et al 2005;  Montgomery, Hollenback, Ward 2012)$\leadsto$ EM, Gibbs, Variational Approximation} 
+\end{itemize}
+}
+\invisible<1-12>{\item[-] Estimate  $\widehat{g}_{m}(\text{T}_{j} = k, \textbf{x} ) \leadsto $ Apply all $M$ models to entire data set} 
+
+\invisible<1-13>{\item[-] Generate effects  of interest (perhaps weighting to other population)  $\textbf{x}_{\text{new}}$ } 
+\end{itemize}
+%\invisible<1-14>{Applied to this experiment: Positive weight on three methods:} \\
+%\invisible<1-15>{(1) LASSO (0.62), (2) KRLS (0.24), (3) Find It (0.14)} 
+%\begin{eqnarray}
+%\invisible<1-11>{\text{Pr}(Y_{i} = \text{Credit} | \textbf{w}_{i} ) & = & \sum_{m=1}^{M} \widehat{\pi}_{m} \widehat{g}_{m}(\textbf{w}_{i} ) \nonumber } 
+%\end{eqnarray}
+%\invisible<1-14>{(Classify if above threshold)} \\
+%\invisible<1-15>{{\large \alert{90\% accuracy}} }\\
+
+\pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause \pause 
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Monte Carlo Evidence}
+\begin{center}
+\only<1>{\scalebox{0.4}{\includegraphics{Plot1.pdf}}}
+\only<2>{\scalebox{0.4}{\includegraphics{Plot2.pdf}}}
+\only<3->{\scalebox{0.3}{\includegraphics{Plot2.pdf}}}
+\end{center}
+\only<3->{\large Ensembles outperform constituent methods $\leadsto$ ensembles place weight on  better performing method}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Returning to \alert{Example} Experiment}
+
+\alert{Recall}: experiment to assess effects of credit claiming on approval $\leadsto$ 1,074 participants (MTurk) \pause  \\
+\invisible<1>{Apply ensemble method (7 constituent methods, 10 fold cross validation), including treatments and Partisanship and Ideology.  } \pause \\
+\invisible<1-2>{Positive  weight on three methods:} \pause 
+\begin{itemize}
+\invisible<1-3>{\item[1)] LASSO (0.62)} \pause 
+\invisible<1-4>{\item[2)] KRLS (0.24)} \pause 
+\invisible<1-5>{\item[3)] Find it (0.14) } 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\begin{tikzpicture}
+\node (dumm) at (-8, 8) [] {} ; 
+\only<1-2, 4, 6>{\node (plot1) at (-5, 8) [] {\scalebox{0.25}{\includegraphics{HetExpIdeoFig2.pdf}}}; }
+\only<8>{\node (plot_no) at (-3, 8) [] {\scalebox{0.3}{\includegraphics{SmallTypeMoneyIdeology.pdf}}}; }
+\only<9->{\node (plot_no) at (-3, 8) [] {\scalebox{0.2}{\includegraphics{SmallTypeMoneyIdeology.pdf}}}; }
+\node (d_plan) at (-8, 4.5) [] {} ; 
+\node (d_plan3) at (-1.25, 4.5) [] {} ; 
+\node (d_plan2) at (-8, 5.75) [] {} ; 
+\node (d_plan4) at (-1.25, 5.75) [] {} ; 
+
+\only<2>{\draw[-, line width = 2pt, red] (d_plan) to [out = 0, in = 180] (d_plan3) ; 
+\draw[-, line width = 2pt, red] (d_plan2) to [out = 0, in = 180] (d_plan4) ; }
+
+\only<3>{\node (plot2) at (-5, 8) [] {\scalebox{0.4}{\includegraphics{HetPlanned.pdf}}}; }
+
+
+\node (d_gun) at (-8, 6.85) [] {} ; 
+\node (d_gun3) at (-1.25, 6.85) [] {} ; 
+\node (d_gun2) at (-8, 8.05) [] {} ; 
+\node (d_gun4) at (-1.25, 8.05) [] {} ; 
+
+\only<4>{\draw[-, line width = 2pt, red] (d_gun) to [out = 0, in = 180] (d_gun3) ; 
+\draw[-, line width = 2pt, red] (d_gun2) to [out = 0, in = 180] (d_gun4) ; }
+
+\node (d_gun) at (-8, 9.25) [] {} ; 
+\node (d_gun3) at (-1.25, 9.25) [] {} ; 
+\node (d_gun2) at (-8, 10.4) [] {} ; 
+\node (d_gun4) at (-1.25, 10.4) [] {} ; 
+
+
+\only<5>{\node (plot3) at (-5, 8) [] {\scalebox{0.4}{\includegraphics{HetGun.pdf}}}; }
+
+\only<6>{\draw[-, line width = 2pt, red] (d_gun) to [out = 0, in = 180] (d_gun3) ; 
+\draw[-, line width = 2pt, red] (d_gun2) to [out = 0, in = 180] (d_gun4) ; }
+
+\only<7>{\node (plot3) at (-5, 8) [] {\scalebox{0.4}{\includegraphics{HetPolice.pdf}}}; }
+
+
+
+\end{tikzpicture}
+
+\only<9>{$\leadsto$ Constituents evaluate expenditures using \alert{qualitative} information, rather than numerical facts}
+
+\pause \pause \pause \pause \pause \pause \pause \pause 
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Estimating Heterogeneous Treatment Effects and the Effects of Heterogeneous Treatments}
+
+Issues with experimental design \pause 
+\begin{itemize}
+\invisible<1>{\item[-] Treatments are conditional on what else is included: averaging other quantities $\neq$ to excluding other quantities} \pause 
+\invisible<1-2>{\item[-] Potential for \alert{fishing} is massive$\leadsto$ \alert{pre analysis plan} and \alert{split-sample design}} \pause 
+\invisible<1-3>{\item[-] Assumption about the way information delivered:} \pause 
+\begin{itemize}
+\invisible<1-4>{\item[1)] We know salient dimensions} \pause 
+\invisible<1-5>{\item[2)] We're constructing effects that correspond with effects in reality} 
+\end{itemize}
+\end{itemize}
+
+\pause 
+
+\invisible<1-6>{\alert{Wednesday's lecture will introduce discovery methods}}
+
+
+
+\end{frame}
+
+
+
+\end{document}
