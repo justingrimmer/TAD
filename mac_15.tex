@@ -1,0 +1,1102 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+%\documentclass{beamer}
+
+%\documentclass[handout]{beamer}
+
+%\usepackage[table]{xcolor}
+\mode<presentation> {
+  \usetheme{Boadilla}
+%  \usetheme{Pittsburgh}
+%\usefonttheme[2]{sans}
+\renewcommand{\familydefault}{cmss}
+%\usepackage{lmodern}
+%\usepackage[T1]{fontenc}
+%\usepackage{palatino}
+%\usepackage{cmbright}
+  \setbeamercovered{transparent}
+\useinnertheme{rectangles}
+}
+\usepackage{soul}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{structure}{fg= black}
+\beamertemplatesolidbackgroundcolor{white}  \setbeamercolor{alerted
+text}{fg=red}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{color}
+\definecolor{gold}{rgb}{0.85,0.66,0}
+\usepackage{cancel}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{fancybox}
+
+% === check mark
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+% === tikz for pictures ===
+\usepackage{tikz}
+\usepackage[latin1]{inputenc}
+\usetikzlibrary{shapes,arrows,trees,fit,positioning}
+
+% ==== dotted lines in tables ===
+\usepackage{arydshln}
+\usepackage[normalem]{ulem}
+
+% === dcolumn package ===
+\usepackage{dcolumn}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+
+% === new commands ===
+\newcommand\ud{\mathrm{d}}
+\newcommand\dist{\buildrel\rm d\over\sim}
+\newcommand\ind{\stackrel{\rm indep.}{\sim}}
+\newcommand\iid{\stackrel{\rm i.i.d.}{\sim}}
+\newcommand\logit{{\rm logit}}
+\renewcommand\r{\right}
+\renewcommand\l{\left}
+\newcommand\Var{{\rm Var}}
+\newcommand\var{{\rm var}}
+\newcommand\Cov{{\rm Cov}}
+\newcommand\bone{\mathbf{1}}
+\newcommand\E{\mathbb{E}}
+\newcommand\wX{\widetilde{X}}
+\newcommand\wT{\widetilde{T}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+ \newenvironment{changemargin}[3]{%
+ \begin{list}{}{%
+ \setlength{\topsep}{0pt}%
+ \setlength{\leftmargin}{#1}%
+ \setlength{\rightmargin}{#2}%
+ \setlength{\topmargin}{#3}%
+ \setlength{\listparindent}{\parindent}%
+ \setlength{\itemindent}{\parindent}%
+ \setlength{\parsep}{\parskip}%
+ }%
+ \item[]}{\end{list}}
+
+
+\newcommand\bX{\mathbf{X}}
+\newcommand\bB{\mathbf{B}}
+\newcommand\bD{\mathbf{D}}
+\newcommand\bM{\mathbf{M}}
+\newcommand\bH{\mathbf{H}}
+\newcommand\bI{\mathbf{I}}
+\newcommand\bG{\mathbf{G}}
+\newcommand\bR{\mathbf{R}}
+\newcommand\bS{\mathbf{S}}
+\newcommand\bV{\mathbf{V}}
+\newcommand\bW{\mathbf{W}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\indep}{\mbox{$\perp\!\!\!\perp$}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand\spacingset[1]{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize}
+\newcommand\ex{\colorbox{princetonorange}{\color{princetonblack}\textsc{Example}} }
+\definecolor{princetonorange}{RGB}{245, 128, 37}
+\definecolor{princetonblack}{RGB}{0,0,0}
+
+% == theorems
+\setbeamertemplate{theorems}[numbered]
+\newcounter{asm}
+\setcounter{asm}{0}
+\newtheorem{assumption}[asm]{Assumption}
+\newtheorem{prop}{Proposition}
+
+% === if you want more than one slides on one page ===
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen}
+%\pgfpagesuselayout{2 on 1}[letterpaper,border shrink = 5mm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\newcommand{\tit}{\bf Machine Learning}
+
+% == titles
+\title[Machine Learning]{\tit}
+
+\author[Grimmer]{\Large Justin Grimmer}
+
+\institute[Chicago]{{\Large University of Chicago}}
+
+\date[]{February 28th, 2018}
+
+% == document begins
+\begin{document}
+
+%%% Title
+\frame{\titlepage}
+
+%%% Table of Contents
+% \frame{\tableofcontents}
+
+%%% Main Contents
+
+
+% Outline:
+% Step 1: Specify problem
+% Step 2: Show inadequacy of existing methods
+% Step 3: Say BROADLY what we are going to do
+% Step 4: Go into specifics of identification proof
+% Step 5: Go into specifics of sIBP
+
+% Key update from MPSA: Explain the
+
+% In general, needs stronger transitions
+
+\begin{frame}
+\begin{changemargin}{-1cm}{+0cm}{-1cm}
+\vskip-0.5cm
+\Large
+
+\begin{center}
+%\only<1>{\scalebox{0.7}{\includegraphics{OldMan.jpg}}}
+%\only<2>{\scalebox{0.7}{\includegraphics{HerbalTeaParty.jpeg}}}
+%\only<1>{\scalebox{0.2}{\includegraphics{CFPB_Complaint.jpg}}}
+%\only<2>{\scalebox{0.8}{\includegraphics{CFPBClarkKent.png}}}
+
+\only<1>{\scalebox{0.275}{\includegraphics{Obama.jpeg}}}
+\only<2>{\scalebox{0.5}{\includegraphics{TrumpTweetMc.png}}}
+% \only<3-4>{
+% \begin{tikzpicture}
+
+% \node (cruz) at (-7,7)[] {\scalebox{0.15}{
+% \includegraphics{TedCruz.jpg}}};
+
+% \invisible<1-3>{\node (text1) at (-7,15) [] {\textcolor{white}{`Brutal Anti-Cruz Attack Ad}}; }
+% \invisible<1-3>{\node (text2) at (-7, 14.5) [] {\textcolor{white}{Just 30 Seconds Of Candidate's Photo}}; }
+% \invisible<1-3>{\node (text3) at (-7, 14.0) [] {\textcolor{white}{Displayed Without Any Text, Voiceover, Music'}}; }
+% \invisible<1-3>{\node (text4) at (-7, 13.5) [] {\textcolor{white}{\emph{The Onion}}}; }
+% \end{tikzpicture}
+% }
+
+\only<3>{\scalebox{2.25}{\includegraphics{Shelby.jpg}}}
+%\only<4>{\scalebox{0.65}{\includegraphics{McCain.jpg}}}
+% \begin{itemize}
+% \item[-] Campaign Messages
+% \item[-] Presidential bully pulpit
+% \item[-] Legislator credit claiming
+% \item[-] Candidate Biographies
+% \end{itemize}
+
+%\only<9-10>{
+%\huge
+%\invisible<1-9>{(Discover)} Causal effect of text?}
+
+\end{center}
+\pause \pause 
+\vskip0.5cm
+
+\end{changemargin}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{The Causal Inference Problem}
+
+\begin{itemize}
+\item<1-> Two roles: text as outcome and text as treatment 
+\invisible<1-3>{\item<4-> Any text analysis requires \alert{mapping} from high to low dimensions }
+%\begin{itemize}
+%\item we call this a $g$ function
+%\item and it is central to the analysis
+%\end{itemize} \pause
+\invisible<1-4>{\item<5-> Need to look at the data to create a good mapping }
+\begin{itemize}
+\invisible<1-5>{\item<6-> $\rightarrow$ potential for problems like \alert{overfitting}}
+\end{itemize} 
+\invisible<1-6>{\item<7-> One subtle problem: \alert{Analyst-Induced SUTVA violation} }
+\begin{itemize}
+\invisible<1-7>{\item<8-> $\rightarrow$ outcome depends on \alert{every} unit's treatment assignment }
+\invisible<1-8>{\item<9> $\rightarrow$ SUTVA violation induced by the \alert{analyst}}
+\end{itemize}
+\end{itemize}
+
+\begin{center}
+\includegraphics<1>[width=.8\textwidth, page=1]{illustrations/TextOutcomeTreatment.pdf} %will be T -> Y
+\includegraphics<2>[width=.8\textwidth, page=2]{illustrations/TextOutcomeTreatment.pdf} % will be T -> Documents
+\includegraphics<3>[width=.8\textwidth, page=3]{illustrations/TextOutcomeTreatment.pdf} % Documents -> Y
+\includegraphics<4-6>[width=.8\textwidth]{illustrations/Gfn.pdf}
+\includegraphics<7-9>[width=.8\textwidth]{illustrations/SUTVA.pdf} 
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{What's a social scientist to do?}
+\visible<2->{Framework for causal inference in texts with discovery (Athey and Wager, Chernozhukov et al., Cranmer and Desmarais, Fafchamps and Labonne, Fong and Grimmer):}
+\begin{itemize}
+\invisible<1-2>{\item<3->[A)] (Not) Pre-Analysis Plan: }
+\begin{itemize}
+\invisible<1-3>{\item<4-> Specify $g$ function \textit{a priori} based on sample documents or some background knowledge. }
+\end{itemize}
+\end{itemize}
+\begin{columns}[c]
+\begin{column}{.5\textwidth}
+\begin{itemize}
+\invisible<1-4>{\item<5->[B)] Train-Test Split (Our Plan):}
+\begin{itemize}
+\invisible<1-5>{\item<6->[1)] Explicitly set aside a training set for \alert{discovery}. }
+\invisible<1-7>{\item<8->[2)] Use this \alert{training} set to \alert{develop a $g$ function} that maps high-dimensional data to measurements. }
+\invisible<1-8>{\item<9->[3)] Given $g$, \alert{estimate} the causal effect in \alert{test} set }
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{.5\textwidth}
+\includegraphics<6>[width=.95\textwidth, page=1]{illustrations/TrainingTest.pdf}
+\includegraphics<7>[width=.95\textwidth, page=2]{illustrations/TrainingTest.pdf}
+\includegraphics<8>[width=.95\textwidth]{illustrations/DevelopingGFn.pdf}
+\includegraphics<9>[width=.95\textwidth]{illustrations/Estimation.pdf} % will be estimation
+\includegraphics<10>[width=.95\textwidth]{images/HMS-Discovery.jpg}
+
+\end{column}
+\end{columns}
+\begin{center}
+\visible<10>{Train-Test allows for \alert{discovery} while avoiding possibilities of fishing.}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Two Running Examples: \alert{Treatment} and Outcome}
+
+\huge 
+\begin{itemize}
+\item[-]  Trump tweets $\leadsto$ partisan reactions
+\item[-]  Presidents ``Going Public'' $\leadsto$ media coverage
+\end{itemize}	
+
+
+% \pause
+% \begin{columns}[c]
+% \begin{column}{.5\textwidth}
+% \begin{framed}
+% \invisible<1>{Text as \alert{Treatment}} \\
+% \begin{center}
+% \invisible<1>{\includegraphics[height=.3\textheight]{images/cfpbcomplaint.png}}
+% \end{center}
+
+% \invisible<1>{How does complaint content at the Consumer Financial Protection Bureau affect the chance of a timely response?}
+% \end{framed}
+% \end{column}
+% \pause 
+% \begin{column}{.5\textwidth}
+% \begin{framed}
+% \invisible<1-2>{Text as \alert{Outcome} }\\
+% \begin{center}
+% \invisible<1-2>{\includegraphics[height=.3\textheight]{Trump.jpg}}
+% \end{center}
+
+% \invisible<1-2>{What Effect Do Presidents Have on News Coverage? }
+% \end{framed}
+% \end{column} \pause
+
+% \end{columns}
+\end{frame}
+
+\begin{frame}
+\huge
+How do people react to Trump's rhetoric?
+
+\end{frame}
+
+
+
+\begin{frame}
+
+\scalebox{0.4}{\includegraphics{TrumpScreenTweet.png}}
+
+
+\end{frame}
+
+
+\begin{frame}
+
+	\alert{Tweet 1: }
+
+	{\tt
+	Why would Kim Jong-un insult me by calling me ``old," when I would NEVER call him ``short and fat?" Oh well, I try so hard to be his friend--and maybe someday that will happen!
+	}
+	\vspace{0.25in}
+
+	\alert{Tweet 2: }
+
+	{\tt
+	Steve Bannon will be a tough and smart new voice at @BreitbartNews...maybe even better than ever before. Fake News needs the competition!
+	} \\
+
+	\vspace{0.25in}
+
+\pause
+	\Large
+	\invisible<1>{Observe difference in evaluations of biographies } \pause \invisible<1-2>{$\leadsto$ Difficult to generalize underlying features (treatments) that drive response}
+
+\end{frame}
+
+\begin{frame}
+
+
+\alert{Tweet 1: }
+
+	{\tt
+	Steve Bannon will be a tough and smart new voice at @BreitbartNews...maybe even better than ever before. \alert{Fake} News needs the competition!
+	}
+
+\vspace{0.25in}
+
+\alert{Tweet 1$^{'}$:}
+
+{\tt
+	Steve Bannon will be a tough and smart new voice at @BreitbartNews...maybe even better than ever before. \sout{\alert{Fake}} News needs the competition!
+	}
+\pause 
+
+\vspace{0.125in}
+
+\invisible<1>{\Large Randomly assign 1, 1$^{'}$ and assess response $\leadsto$ are we interested in effect of one word?}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+
+	\alert{Tweet 1: }
+
+	{\tt
+Negotiations on DACA have begun. Republicans want to make a deal and Democrats say they want to make a deal. Wouldn't it be great if we could finally, after so many years, solve the DACA puzzle. \alert{This will be our last chance, there will never be another opportunity!} March 5th.	}
+
+	\vspace{0.25in}
+
+	\alert{Tweet 2:}
+
+	{\tt
+Negotiations on DACA have begun. Republicans want to make a deal and Democrats say they want to make a deal. Wouldn't it be great if we could finally, after so many years, solve the DACA puzzle. \alert{I will use my office to negotiate a fair deal for the dreamers!} March 5th.	} \\
+	\vspace{0.25in}
+
+	\Large
+	\pause
+\invisible<1>{\Large \alert{Latent Representation} (Codebook) $\leadsto$ true whether hand coded, supervised, or unsupervised}
+
+\end{frame}
+
+
+
+\begin{frame}
+ 	\frametitle{Text-Based Intervention}
+
+\Large
+
+ 	\begin{itemize}
+ 		\item[-] Assume ``Interesting'' treatments (coding) must be known in advance \pause   \medskip
+ 		\invisible<1>{\item[-] Discovery of treatments may (often/usually) happen after viewing data} \pause
+ 		\invisible<1-2>{\item[-] \alert{Explicit} discovery phase in research}
+ 	\end{itemize}
+ \end{frame}
+
+\frame{
+	\huge
+	\centering
+	Automatically discover treatments\\
+	+\\
+	Estimate marginal effects
+}
+
+
+\begin{frame}
+	\frametitle{Three Key Steps}
+
+\pause
+	\Large
+	\begin{enumerate}
+		\invisible<1>{\item[1)] Theory: conditions to identify marginal effects of latent treatments (\alert{Average Marginal Component Effect} (AMCE) is identified) \medskip} \pause
+		\invisible<1-2>{\item[2)] Method for discovering features (treatments) \medskip} \pause
+		\invisible<1-3>{\item[3)] Method for estimating marginal effect for discovered features (treatments)}
+	\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Identifying the Marginal Effects of Latent Treatments}
+
+	\Large
+	\begin{itemize}
+		\item[-] \alert{Average Marginal Component Effect} (AMCE): Isolate effect of one treatment, averaging over other treatments \medskip \pause
+		\invisible<1>{\item[-] Let $\boldsymbol{Z}_i$ be $i$'s binary feature vector \medskip}
+		\invisible<1>{\item[-] Ex: $\boldsymbol{Z}_i = (0, 0, 1, 1, 0)$} \pause
+	\end{itemize}
+
+	\invisible<1-2>{\begin{small}
+	\begin{eqnarray}
+		\text{AMCE}_{k} & = & \int_{\boldsymbol{Z}_{-k}} \alert<7>{\mathbb{E}}\left[\alert<4>{Y(Z_{k} = 1, \boldsymbol{Z}_{ -k} )}  - \alert<5>{Y(Z_{k} = 0, \boldsymbol{Z}_{ -k} )}\right] \alert<6>{m(\boldsymbol{Z}_{-k})} d\boldsymbol{Z}_{-k} \nonumber
+	\end{eqnarray}
+	\end{small}}
+
+
+\invisible<1-6>{\Large Conjoint With Discovered Treatments }\invisible<1-7>{\Large   (or) Discover Features that Drive Response in A/B Test}	
+\pause \pause \pause \pause\pause 
+
+\end{frame}
+
+
+
+
+\begin{frame}
+	\frametitle{Identifying the AMCE}
+	\begin{itemize}
+		\item[-] An individual sees a text ($\boldsymbol{X}_i$: text seen by $i$) \medskip
+		\item[-] \alert{Function} (assume known for now): text $\leadsto$ treatments in text ($\boldsymbol{Z}_i \equiv g(\boldsymbol{X}_i)$) \medskip
+		 \item[] $\boldsymbol{Z}_i$ is a low-dimensional rep of $\boldsymbol{X}_i$, describing treatments
+	\end{itemize}
+
+\pause
+\invisible<1>{
+	Assume: \medskip} \pause
+	\begin{itemize}
+		\invisible<1-2>{\item[1)] No ``spillover" (SUTVA, Rubin 1986: $\tilde{Y}_i(\boldsymbol{X}) = \tilde{Y}_i(\boldsymbol{X}_i)$ )\medskip} \pause
+		\invisible<1-3>{\item[2)] Random assignment of texts ($\tilde{Y}_{i}(\boldsymbol{X}_{i}) \independent \boldsymbol{X}_{i}$ for all $i$ )\medskip} \pause
+		\invisible<1-4>{\item[3)] Sufficiency: For all $\boldsymbol{X}$ and $\boldsymbol{X}^{'}$ such that $g(\boldsymbol{X}) = g(\boldsymbol{X}^{'}) $ then $E[\tilde{Y}_{i}(\boldsymbol{X})] = E[\tilde{Y}_{i}(\boldsymbol{X}^{'})]$.} \pause
+		\invisible<1-5>{\item[4)] Common support: all combinations of treatments have non-zero probability ($f(\boldsymbol{Z}_i) > 0 $ for all $\boldsymbol{Z}_i \in \text{Range}\; g(\cdot)$)} \pause
+	\end{itemize}
+	\medskip
+
+	\begin{prop} \label{p:ident}
+	\invisible<1-6>{Assumptions 1-4 are sufficient to identify the AMCE$_{k}$ for arbitrary $k$. }
+	\end{prop}
+
+\end{frame}
+
+
+
+
+
+ % \begin{frame}
+ % 	\frametitle{Challenges of Discovering Treatments}
+ % 	\begin{itemize}
+ % 		\item Challenge 1:  Need to discover ``interesting'' $g(\cdot)$ that maps $\boldsymbol{X}$ to $\boldsymbol{Z}$ \medskip
+ % 		\begin{itemize}
+ % 			\item Want $\boldsymbol{Z}$ that explains $\boldsymbol{Y}$ \medskip
+ % 			\item Use $\boldsymbol{X}$, $\boldsymbol{Y}$ to discover $g_{X,Y}(\cdot)$ \medskip
+ % 		\end{itemize}
+ % 		\item Challenge 2: Can't control $\boldsymbol{Z}$; can only control $\boldsymbol{X}$ \medskip
+ % 	\end{itemize}
+ % \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Challenges of Discovering Treatments}
+% 	\begin{itemize}
+% 		\item Suppose only one treatment and $Z_i = 1$ \medskip
+% 		\item $Y_i(Z_i = 1) - Y_i(Z_i = 0)$ \medskip
+% 		\item To make $Z_i = 0$, need to change $X_i$ \medskip
+% 		\item If $X_i$ changes, so does $g_{X,Y}$ (and the meaning of $\boldsymbol{Z}$) \medskip
+% 		\item Impossible to manipulate $\boldsymbol{X}$ to observe $Y_i(Z_i = 0)$
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{The Training Test Split}
+% 	\begin{itemize}
+% 		\item Solution: Split into training and test set \medskip
+% 		\item Use $\boldsymbol{X}^{\text{train}}$ and $\boldsymbol{Y}^{\text{train}}$ to discover $g_{X^{\text{train}}, Y^{\text{train}}}(\cdot)$ \medskip
+% 		\item $Y_i(Z_{i}^{\text{test}} = 1) - Y_i(Z_{i}^{\text{test}} = 0)$ well defined \medskip
+% 		\item Can manipulate $\boldsymbol{X}_i^{\text{test}}$ to make $Z_i^{\text{test}} = 0$ \medskip
+% 		\item Bonus: We can search across many $g$'s in training
+% 	\end{itemize}
+% \end{frame}
+
+
+
+\begin{frame}
+
+\huge
+
+Discovering Treatments and Estimating Marginal Effects
+
+\end{frame}
+
+
+
+\begin{frame}
+	\frametitle{Discovery of Treatments from Text Corpora}
+
+
+	\pause
+	\begin{itemize}
+		\invisible<1>{\item[1)] (Assume) Randomly assign texts, $\boldsymbol{X}_i$, to respondents} \pause
+		\invisible<1-2>{\item[2)] Obtain responses $\boldsymbol{Y}_i$ for each respondent}\pause
+		\invisible<1-3>{\item[3)] (Randomly) divide texts and responses into training and test set} \pause
+		\begin{itemize}
+		\invisible<1-4>{\item[a)] Avoid technical issues with using entire sample (Analyst-induced SUTVA violations)} \pause
+		\invisible<1-5>{\item[b)] Ensure we avoid overfitting }
+		\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+	\frametitle{Discovering Interesting Treatments}
+
+\Large
+	Discovering function from texts to treatments $g()$ \pause
+	\begin{itemize}
+		\invisible<1>{\item[-]  \large Use both documents and responses to discover the function \medskip} \pause
+		\invisible<1-2>{\item[-] \large \alert{Topic} and Supervised \alert{Topic} models workhorse text models (Blei, Ng, and Jordan 2003; Blei and McAuliffe, 2007) \pause }
+	\end{itemize}
+		\invisible<1-3>{ \alert{Treatments on simplex imply marginalization impossible} $\leadsto$ increase in one category implies decrease in other category}
+
+
+
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{A Refreshser on sLDA}
+
+% 	Each document has a vector of topic proportions.  Proportions add up to 1.
+
+% 	\begin{center}
+% 	\begin{tabular}{| c | c | c |}
+% 	\hline
+% 	Education & Family & Occupation\\
+% 	\hline
+% 	degree & mother & doctor\\
+% 	graduated & italian & practice\\
+% 	science & ancestry & law\\
+% 	law & n\'ee & business\\
+% 	economics &  german & work\\
+% 	\hline
+% 	\end{tabular}
+% 	\end{center}
+
+% 	Substantive question: Is discussing education beneficial?
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Marginalizing on the Simplex}
+% 	\begin{itemize}
+% 		\item Ideal experiment: Compare how much a person likes a biography that is 50\% about education to one that is 30\% about education, all else equal \medskip
+% 		\item Problem: All else \textit{cannot} be equal \medskip
+% 		\item Less about education $\implies$ more about family or occupation
+% 	\end{itemize}
+% \end{frame}
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt=#1{}{invisible}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+	},
+}
+
+\begin{frame}
+	\frametitle{The Supervised Indian Buffet Process (sIBP, distinct [though related] to Quadrianto et al 2013) }
+	\begin{columns}
+	\hspace{.3cm}
+	\begin{column}{5.25cm}
+		 \begin{figure}
+		 \vspace{-1cm}
+		 \begin{tikzpicture}
+		 \tikzstyle{main}=[circle, minimum size = 10mm, thick, draw =black!80, node distance = 16mm]
+		 \tikzstyle{connect}=[-latex, thick]
+		 \tikzstyle{connect2}=[-latex, thick, red]
+		 \tikzstyle{box}=[rectangle, draw=black!100]
+		   \node[main] (Z) [label=right:$Z$] { };
+		   \node[main] (X) [above right=1.5 and 0.25 of Z,fill=black!25, label=right:$X$] { };
+		   \node[main] (A) [left=2.3 of X,label=left:$A$] { };
+		   \node[main] (pi) [left=1.3 of Z,label=left:$\pi$] { };
+		   \node[main] (Y) [below right=1.5 and 0.25 of Z,fill=black!25, label=right:$Y$] { };
+		   \node[main] (beta) [above left=.1 and 2.6 of Y, label=left:$\beta$] { };
+		   \node[main] (tau) [below left=.1 and 2.6 of Y, label=left:$\tau$] { };
+		   \path (A) edge [connect] (X)
+		         (Z) edge [connect] (X)
+		         (Z) edge [connect] (Y)
+		         (beta) edge [connect] (Y)
+		         (tau) edge [connect] (Y)
+		         (pi) edge [connect] (Z)
+		         (tau) edge [connect] (beta);
+		   \path[visible on=<2>] (pi) edge [connect2] (Z);
+		   \path[visible on=<3>] (A) edge [connect2] (X)
+		   						 (Z) edge [connect2] (X);
+		   \path[visible on=<4>] (beta) edge [connect2] (Y)
+		   						 (tau) edge [connect2] (Y)
+		   						 (Z) edge [connect2] (Y);
+		 \end{tikzpicture}
+		 \end{figure}
+		\small
+		Text and response depend on latent treatments
+	\end{column}
+	\hspace{.3cm}
+	\begin{column}{7.5cm}
+		\begin{itemize}
+			\small
+			\item[-] \alert{Treatment assignment}
+			\vspace{-.25cm}
+			\small
+			\begin{eqnarray}
+			z_{i,k} & \sim & \text{Bernoulli}(\pi_{k}) \nonumber\\
+			\pi_k & \sim & \prod_{m=1}^{k} \eta_m \nonumber\\
+			\eta_m & \sim & \text{Beta}\left(\alpha, 1\right) \nonumber
+			\end{eqnarray}
+			\item[-] \alert{Document Creation}:
+			\vspace{-.2cm}
+			\begin{eqnarray}
+			\boldsymbol{X}_{i} & \sim & \text{MVN}(\boldsymbol{Z}_{i} \boldsymbol{A}, \sigma^2_{X} I_{D}) \nonumber  \\
+			\boldsymbol{A}_k & \sim & \text{MVN}(\boldsymbol{0}, \sigma^2_A I_D) \nonumber
+			\end{eqnarray}
+			\item[-] \alert{Response}:
+			\vspace{-.2cm}
+			\begin{eqnarray}
+			Y_{i} & \sim & \text{MVN}(Z_{i} \boldsymbol{\beta}, \tau^{-1})\nonumber \\
+			\boldsymbol{\beta} | \tau & \sim & \text{MVN}(\boldsymbol{0}, \tau^{-1} I_K) \nonumber\\
+			\tau & \sim & \text{Gamma}(a,b) \nonumber
+			\end{eqnarray}
+		\end{itemize}
+	\end{column}
+	\end{columns}
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{Inferring the parameters}
+% 	\begin{itemize}
+% 		\item Goal: Obtain $p(\boldsymbol{Z}, \boldsymbol{\pi}, \boldsymbol{A}, \boldsymbol{\beta}, \tau \;|\; \boldsymbol{X}, \boldsymbol{Y}, \alpha, \sigma_X^2, \sigma_A^2, a, b)$ \medskip
+% 		\item Posterior intractable \medskip
+% 		\item Use variational approximation \medskip
+% 		\begin{itemize}
+% 			\item Use a family of approximating distributions \medskip
+% 			\item Find member of family closest to true posterior \medskip
+% 			\item Able to find this without knowing true posterior
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Interpreting the Treatments}
+% 	\begin{itemize}
+% 		\item Each column of $\boldsymbol{X}$ is standardized to mean 0, sd 1 \medskip
+% 		\item $X_{i,j} \sim N(\sum_{k=1}^{K} Z_{i,k} A_{k,j}, \sigma_X^2)$ \medskip
+% 		\item Largest $\boldsymbol{A}_{k,\cdot}$ give words most characteristic of $k$ \medskip
+% 		\item Ex: If $A_{k,j}$ is large for ``graduated,'' ``college,'' and ``degree,'' $\boldsymbol{Z}_{\cdot, k}$ is education
+% 	\end{itemize}
+% \end{frame}
+
+\begin{frame}
+	\frametitle{Discovery of Treatments from Text Corpora}
+	\begin{itemize}
+		\item[1)] Randomly assign texts, $\boldsymbol{X}_i$, to respondents
+		\item[2)] Obtain responses $\boldsymbol{Y}_i$ for each respondent
+		\item[3)] Divide texts and responses into training and test set
+		\item[4)] In training set: Discover mapping from texts to treatments \pause
+		\begin{itemize}
+		\invisible<1>{\item[a)] Apply supervised Indian Buffet Process (sIBP) to documents and responses to infer latent treatments in texts  } \pause
+		\invisible<1-2>{\item[b)] Model selection via nonparametric process, quantitative fit, and qualitative assessment} \pause
+		\end{itemize}
+		\invisible<1-3>{\item[5)] In test set: infer treatments and measure their effect} \pause
+		\begin{itemize}
+		\invisible<1-4>{\item[a)] Use sIBP trained on training set to infer latent treatments on test set documents (without conditioning on test set responses)} \pause
+		\invisible<1-5>{\item[b)] Estimate effect of treatments with regression, with a bootstrap procedure to estimate uncertainty}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{Tuning Hyperparameters}
+% 	\begin{itemize}
+% 		\item Choice of hyperparameters $\leadsto$ discovered $\boldsymbol{Z}$ \medskip
+% 		\item Tuning hyperparameters $\implies$ choosing hypotheses to test
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Discovery of Treatments from Text Corpora}
+% 	\begin{itemize}
+% 		\item[1)] Randomly assign texts, $\boldsymbol{X}_i$, to respondents
+% 		\item[2)] Obtain responses $\boldsymbol{Y}_i$ for each respondent
+% 		\item[3)] Divide texts and responses into training and test set
+% 		\item[4)] In training set:
+% 		\begin{itemize}
+% 		\item[a)] Apply supervised Indian Buffet Process (sIBP) to documents and responses to infer latent treatments in texts
+% 		\item[b)] Model selection via nonparametric process, quantitative fit, and qualitative assessment
+% 		\end{itemize}
+% 		\item[5)] In test set:
+% 		\begin{itemize}
+% 		\item[a)] Use sIBP trained on training set to infer latent treatments on test set documents
+% 		\item[b)] Estimate effect of treatments with regression, with a bootstrap procedure to estimate uncertainty
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Inferring Treatments in the Test Set}
+% 	\begin{itemize}
+% 		\item Lack explicit mapping from $\boldsymbol{X}$ to $\boldsymbol{Z}$
+% 		\item Have posterior approx distribution from training \medskip
+% 		\item Need posterior approx distribution of $\boldsymbol{Z}^{\text{test}}$
+% 	\end{itemize}
+% 	\vspace{.25cm}
+% 	\begin{columns}
+% 	\hspace{.3cm}
+% 	\begin{column}{5.25cm}
+% 		 \begin{figure}
+% 		 \vspace{-1cm}
+% 		 \begin{tikzpicture}
+% 		 \tikzstyle{main}=[circle, minimum size = 10mm, thick, draw =black!80, node distance = 16mm]
+% 		 \tikzstyle{connect}=[-latex, thick]
+% 		 \tikzstyle{connect2}=[-latex, thick, red]
+% 		 \tikzstyle{box}=[rectangle, draw=black!100]
+% 		   \node[main] (Z) [label=right:$Z^{\text{test}}$] { };
+% 		   \node[main] (X) [above right=1.5 and 0.25 of Z,fill=black!25, label=right:$X^{\text{test}}$] { };
+% 		   \node[main] (A) [left=2.3 of X, fill=black!25, label=left:$A$] { };
+% 		   \node[main] (pi) [left=1.3 of Z, fill=black!25,  label=left:$\pi$] { };
+% 		   \path (A) edge [connect] (X)
+% 		         (Z) edge [connect] (X)
+% 		         (pi) edge [connect] (Z);
+% 		 \end{tikzpicture}
+% 		 \end{figure}
+% 	\end{column}
+% 	\hspace{.3cm}
+% 	\begin{column}{6cm}
+% 		\begin{itemize}
+% 			\small
+% 			\item [-] Approx distributions of $\boldsymbol{\pi}$ and $\boldsymbol{A}$ obtained in training \medskip
+% 			\item [-] Find approx distribution of $\boldsymbol{Z}^{\text{test}}$ most consistent with the posterior
+% 		\end{itemize}
+% 	\end{column}
+% 	\end{columns}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Estimating AMCE}
+% 	\begin{itemize}
+% 		\item Have posterior of $\boldsymbol{Z}^{\text{test}}$ \medskip
+% 		\item Bootstrap procedure: \medskip
+% 		\begin{itemize}
+% 			\item Sample from test set with replacement \medskip
+% 			\item Draw $\tilde{z}_{i,k}^{\text{test}} \sim \text{Bernoulli}(Pr(z_{i,k}^{\text{test}} = 1))$ for all $i$, $k$ \medskip
+% 			\item Regress $\boldsymbol{Y}^{\text{test}}$ on $\boldsymbol{\tilde{Z}}^{\text{test}}$ \medskip
+% 		\end{itemize}
+% 		\item Yields AMCEs under independence assumption
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Discovery of Treatments from Text Corpora}
+% 	\begin{itemize}
+% 		\item[1)] Randomly assign texts, $\boldsymbol{X}_i$, to respondents
+% 		\item[2)] Obtain responses $\boldsymbol{Y}_i$ for each respondent
+% 		\item[3)] Divide texts and responses into training and test set
+% 		\item[4)] In training set:
+% 		\begin{itemize}
+% 		\item[a)] Apply supervised Indian Buffet Process (sIBP) to documents and responses to infer latent treatments in texts
+% 		\item[b)] Model selection via nonparametric process, quantitative fit, and qualitative assessment
+% 		\end{itemize}
+% 		\item[5)] In test set:
+% 		\begin{itemize}
+% 		\item[a)] Use sIBP trained on training set to infer latent treatments on test set documents
+% 		\item[b)] Estimate effect of treatments with regression, with a bootstrap procedure to estimate uncertainty
+% 		\end{itemize}
+% 	\end{itemize}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Candidate Biographies on Wikipedia: Setup}
+
+% 	Barbara Mikulski $\leadsto$ Barbara Schumacher {\tt
+
+% 	Schumacher was born and raised in the Highlandtown neighborhood of East Baltimore, the eldest of the three daughters of Christine Eleanor (nee Kutz) and William Schumacher. Her parents were both of Polish descent; her immigrant great-grandparents had owned a bakery in Baltimore. During her high school years at the Institute of Notre Dame, she worked in her parents' grocery store...
+% 	}
+
+% 	\vspace{.25cm}
+
+% 	\pause
+% 	\invisible<1>{Protocol: For each respondent sees up to 3 texts from the corpus of $> 2200$ biographies }\pause
+% 	\begin{itemize}
+% 	\invisible<1-2>{\item[-] Observe text } \pause
+% 	\invisible<1-3>{\item[-] Feeling thermometer rating: 0-100} \pause
+% 	\end{itemize}\smallskip
+% 	\invisible<1-4>{1,886 participants, 5,303 responses\\\smallskip} \pause
+% 	\invisible<1-5>{2,651 training, 2,652 test}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Candiate Biographies on Wikipedia: Results}
+% 	\vspace{.25cm}
+% 	\begin{small}
+% 	\centering
+% 	\begin{tabular}{ll}
+% 	\hline
+% 	Treatment & Keywords\\
+% 	\hline
+% 	3 & director, university, received, president, phd, policy \\
+% 	5 & elected, house, democratic, seat\\
+% 	6 & united\_states, military, combat, rank \\
+% 	9 & law, school\_law, law\_school, juris\_doctor, student \\
+% 	10 & war, enlisted, united\_states, assigned, army \\
+% 	\hline
+% 	\end{tabular}
+% 	\end{small}
+
+% 	\begin{center}
+% 	\includegraphics[scale=0.375]{BioConfidenceInts.pdf}
+% 	\end{center}
+% \end{frame}
+
+
+\begin{frame}
+\frametitle{Recovering Treatments from Heterogeneous Experiment}
+
+
+\only<3>{
+\begin{small}
+	\begin{tabular}{p{6.25in}}
+
+Credit Claiming Condition \\
+\hline
+\textbf{Headline}: Representative (redacted) $|$stageTitle $|$moneyTitle $|$typeTitle\\
+
+\textbf{Body}: Representative (redacted), $|$partyMain, $|$alongMain $|$stageMain $|$moneyMain $|$typeMain.  \\
+
+Rep. (redacted) said ``This money $|$stageQuote typeQuote"\\
+\hline
+\textbf{$|$stageTitle}:[will request/requested/secured] \\
+\textbf{$|$moneyTitle}:[\$50 thousand/\$20 million] \\
+\textbf{$|$typeTitle} : [to purchase safety equipment for local firefighters/to purchase safety equipment for local police/to repave local roads, to beautify local parks/for medical equipment at the local planned parenthood/to help build a state of the art gun range]\\
+\textbf{$|$partyMain} : [Democrat/Republican]\\
+\textbf{$|$alongMain} : [(No text)/and Senator (redacted), a Democrat/ and Senator (redacted), a Republican]    \\
+\textbf{$|$stageMain} : [will request/requested/secured] \\
+\textbf{$|$moneyMain}: [\$50 thousand/ \$20 million] \\
+\textbf{$|$typeMain}: [to purchase safety equipment for local firefighters/to purchase safety equipment for local police/to repave local roads, to beautify local parks/for medical equipment at the local planned parenthood/to help build a state of the art gun range]\\
+\textbf{$|$stageQuote} : [would help/would help/will help]\\
+\textbf{$|$typeQuote}: [our brave firefighters stay safe as they protect our businesses and homes/our brave police officers stay safe as they protect our property from criminals/keep our roads in safe and working condition, ensuring that our local economy will continue to grow/create parks that add value to the community and provide our children a safe place to play/provide state of the art care for women in our community"/"provide local residents and local, state, and national law enforcement officials a place to sharpen their skills"]\\
+\hline 
+\textbf{Summary of Conditions}\\
+\textbf{Funding Type}:Planned Parenthood, Parks, Gun Range, Fire Department, Police, Roads\\
+\textbf{Money}: \$ 50 thousand, \$20 million \\
+\textbf{Stage} : Will Requested, Requested, Secured \\
+\textbf{Who}: Alone, a Senate Democrat, a Senate Republican\\
+\textbf{Party}: Democrat, Republican\\
+\hline
+\end{tabular}
+\end{small}
+} 
+
+
+\Large
+\only<1-2,5->{
+\begin{itemize}
+\pause 
+\item[-] \invisible<1>{Credit Claiming Project (Grimmer, Messing and Westwood (2017)): Modular (large-factorial experiment) to assess credit claiming effects} \pause 
+\item[-] \invisible<1-4>{
+Train/Test split response, text as if natural language (50\%/50\%)}
+\end{itemize}
+}
+
+\only<4>{ 
+\textbf{Headline}: Representative (redacted) secured \$20 Million to purchase safety equipment for local firefighters\\
+
+\textbf{Body}: Representative (redacted), Democrat, secured \$20 Million to purchase safety equipment for local firefighters.  \\
+
+Rep. (redacted) said ``This money will help our brave firefighters stay safe as they protect our businesses and homes"}
+
+
+\only<1-2, 5-6>{\invisible<1-5>{
+\begin{footnotesize}
+\begin{tabular}{c|llllll}
+\hline \hline
+			& \multicolumn{6}{c}{Type Treatment From Experiment}\\
+Discovered & Planned Parenthood & Parks & Gun Range & Roads & Police & Fire \\
+\hline 
+Treat 1         & 0                  & 4     &  0         & 127  &  0     &   0   \\
+Treat 2 		& 0 				 & 0 	 & 122 		  & 0    &  0     &   0  \\
+Treat 3 		& 119 				&  4 	 & 0 		  & 0 	 & 0 	  &   0  \\
+\hline
+\end{tabular}
+\end{footnotesize}
+
+}
+	
+}
+
+\only<7>{
+	
+
+\scalebox{0.5}{\includegraphics{CompareEstimates.pdf}}
+
+}
+
+
+\end{frame}
+
+
+% \begin{frame}
+% 	\frametitle{Candidate Biographies on Wikipedia: Setup}
+
+% 	Barbara Mikulski $\leadsto$ Barbara Schumacher {\tt
+
+% 	Schumacher was born and raised in the Highlandtown neighborhood of East Baltimore, the eldest of the three daughters of Christine Eleanor (nee Kutz) and William Schumacher. Her parents were both of Polish descent; her immigrant great-grandparents had owned a bakery in Baltimore. During her high school years at the Institute of Notre Dame, she worked in her parents' grocery store...
+% 	}
+
+% 	\vspace{.25cm}
+
+% 	\pause
+% 	\invisible<1>{Protocol: For each respondent sees up to 3 texts from the corpus of $> 2200$ biographies }\pause
+% 	\begin{itemize}
+% 	\invisible<1-2>{\item[-] Observe text } \pause
+% 	\invisible<1-3>{\item[-] Feeling thermometer rating: 0-100} \pause
+% 	\end{itemize}\smallskip
+% 	\invisible<1-4>{1,886 participants, 5,303 responses\\\smallskip} \pause
+% 	\invisible<1-5>{2,651 training, 2,652 test}
+% \end{frame}
+
+% \begin{frame}
+% 	\frametitle{Candiate Biographies on Wikipedia: Results}
+% 	\vspace{.25cm}
+% 	\begin{small}
+% 	\centering
+% 	\begin{tabular}{ll}
+% 	\hline
+% 	Treatment & Keywords\\
+% 	\hline
+% 	3 & director, university, received, president, phd, policy \\
+% 	5 & elected, house, democratic, seat\\
+% 	6 & united\_states, military, combat, rank \\
+% 	9 & law, school\_law, law\_school, juris\_doctor, student \\
+% 	10 & war, enlisted, united\_states, assigned, army \\
+% 	\hline
+% 	\end{tabular}
+% 	\end{small}
+
+% 	\begin{center}
+% 	\includegraphics[scale=0.375]{BioConfidenceInts.pdf}
+% 	\end{center}
+% \end{frame}
+
+\begin{frame}
+\frametitle{Trump Tweets}
+
+{\tt YouGov}: survey response to trump tweets \pause 
+
+\only<2>{
+	\scalebox{0.4}{\includegraphics{TrumpScreenTweet.png}}
+}
+\pause 
+\begin{itemize}
+\invisible<1-2>{\item[-] Survey Equal \# Republicans, Democrats, Independents: read Trump tweet + evaluate ({\tt Great, Good, OK, Bad, Terrible})} \pause 
+\invisible<1-3>{\item[-] Aggregate, create scale $[-200,200]$} \pause 
+\invisible<1-4>{\item[-] Modify sIBP: Shared treatments, discover heterogeneous effects} \pause 
+\invisible<1-5>{\item[-] Train (66\%), Test (33\%), Clustered by tweet} \pause 
+\end{itemize}	
+
+\invisible<1-6>{\begin{footnotesize}
+\begin{tabular}{|lllll|}
+  \hline
+ Treatment 1 & Treatment 2 & Treatment 3 & Treatment 4 & Treatment 5 \\ 
+  \hline
+ fake & cuts & obamacare & flotus & prime \\ 
+   news & strange & senators & behalf & minister \\ 
+   media & tax & repeal & anthem & korea \\ 
+   cnn & luther & healthcare & melania & north \\ 
+   election & stock & replace & nfl & stock \\ 
+   story & market & republican & flag & market \\ 
+   nbc & alabama & vote & prayers & china \\ 
+   stories & reform & republicans & bless & executive \\ 
+   hillary & record & senate & ready & prayers \\ 
+   clinton & high & north & players & order \\ 
+   \hline
+\end{tabular}
+\end{footnotesize}}
+
+
+
+
+\end{frame}
+
+
+\begin{frame}
+
+\scalebox{0.45}{\includegraphics{TrumpTE.pdf}}
+
+
+
+\end{frame}
+
+
+\begin{frame}
+
+\huge 
+R Package: {\tt textEffect}
+
+\end{frame}
+
+
+\begin{frame}
+
+\huge 
+
+Appendix
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Formal Argument for Train/Test Split}
+
+Learn $g \leadsto \hat{g}$ \pause 
+
+\begin{itemize}
+\invisible<1>{\item[-] $\boldsymbol{X}$ and $\boldsymbol{X}^{'}$ are randomizations, with $\boldsymbol{X}_{i} = \boldsymbol{X}^{'}_{i}$ (but with at least one $\boldsymbol{X}_{j} \neq \boldsymbol{X}_{j}^{'}$ )  } \pause 
+\invisible<1-2>{\item[-] $\boldsymbol{Y}(\boldsymbol{X}), \boldsymbol{Y}(\boldsymbol{X}^{'})$ are potential outcomes.    } \pause 
+\end{itemize} 
+
+\invisible<1-3>{Define function: } \pause 
+\begin{eqnarray}
+\invisible<1-4>{\hat{g}(\boldsymbol{X}_{i})  & = & \hat{g}(\boldsymbol{X}_{i}, \boldsymbol{Y}(\boldsymbol{X})) \nonumber } \pause 
+\end{eqnarray}
+
+\invisible<1-5>{Problem:
+\begin{eqnarray}
+\hat{g}(\boldsymbol{X}_{i})  =\hat{g}(\boldsymbol{X}_{i}, \boldsymbol{Y}(\boldsymbol{X}))  & \neq & \hat{g}(\boldsymbol{X}^{'}_{i}) = \hat{g}(\boldsymbol{X}_{i}^{'}, \boldsymbol{Y}(\boldsymbol{X}^{'})) \nonumber  
+\end{eqnarray} } \pause 
+
+\invisible<1-6>{Solutions:} \pause 
+\begin{itemize}
+	\invisible<1-7>{\item[1)] No responses/define before: $\hat{g}(\boldsymbol{X}_{i}) = \hat{g}(\boldsymbol{X}_{i},\boldsymbol{X})$ Miss treatments} \pause 
+	\invisible<1-8>{\item[2)] Assume Invariant to randomizations$\leadsto$ potential for fishing} \pause 
+	\invisible<1-9>{\item[3)] \alert{Train/Test Split}: (Randomly) Divide responses into $S_{\text{train}}$ and $S_{\text{test}}$ } \pause 
+		\begin{itemize}
+			\invisible<1-10>{\item[-] Learn ${g}$ using $S_{train}$ (Analgous to pre-test)} \pause 
+			\invisible<1-11>{\item[-] Infer treatment in $S_{test}$  $\hat{g}(\boldsymbol{X}_{i}, \boldsymbol{Y}(\boldsymbol{X})_{\text{train}})$}
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\end{document}
